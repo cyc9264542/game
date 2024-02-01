@@ -1,8 +1,101 @@
 #include <stdio.h>
 #include<string.h>
 void estr_to_num();//科学计数法转数字
+void fengshu_to_xunhuan(x,y);//分数转循环小数
+void fengshu_to_xunhuan(x,y)
+{
+int xun(int j,int k)
+{
+    int a[10000];
+    int c[10000];
+    int b[10000];
+    int n=0,isok=0;
+    for(int i=0;i<10000;i++)
+    {
+        a[i]=0;
+    }
+    for(int i=0;i<10000;i++)
+    {
+        c[i]=100000;
+    }
+    for(int i=0;i<10000;i++)
+    {
+        b[i]=0;
+    }
+    a[j]=1;
+    c[j]=-1;
+    while(1==1)
+    {
+        b[n]=(j*10)/k;
+        j=(j*10)%k;
+        if(n<c[j])
+        {
+            c[j]=n;
+        }
+        if(a[0]==1)
+        {
+            isok=1;
+            break;
+        }
+        if(a[j]==1)
+        {
+            break;
+        }
+        a[j]=1;
+        n++;
+    }
 
+    if(isok==1)
+    {
+        for(int p9=0;p9<n;p9++)
+        {
+        printf("%d",b[p9]);
+        }
+        printf("(0)");
+    }
+    else
+    {
+        for(int p7=0;p7<=c[j];p7++)
+        {
+        printf("%d",b[p7]);
+        }
+        printf("(");
+        for(int p8=c[j]+1;p8<=n;p8++)
+        {
+        printf("%d",b[p8]);
+        }
+        printf(")");
 
+    }
+}
+    if(x>y)
+    {
+        if(x%y==0)
+        {
+            printf("%d.(0)",x/y);
+        }
+        else
+        {
+        int zh,yu;
+        zh=x/y;
+        yu=x%y;
+        printf("%d.",zh);
+        xun(yu,y);
+
+        }
+    }
+    else if(x<y)
+    {
+
+        printf("0.");
+        xun(x,y);
+    }
+    else
+    {
+        printf("1.(0)");
+    }
+
+}
 void estr_to_num(char *a,int len)
 {
     char s[len];
