@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <windows.h>
-#include <pthread.h>
+//#include <pthread.h>
 
 #define up 72
 #define down 80
@@ -15,27 +15,27 @@
 #define right 77
 #define Esc 27
 
-//SetConsoleOutputCP(65001);936:¼òÌåÖĞÎÄ,65001:UTF-8, 
+//SetConsoleOutputCP(65001);936:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,65001:UTF-8, 
 
-void userand(void);                     //²¥ÖÖ 
-int randint(int a,int b);               //Ëæ»úÕûÊı 
-float randuniform(float a,float b);     //Ëæ»úÊµÊı 
-void timesleep(int seconds);            //Ê±¼äÔİÍ££¬½Ï¾«È·£¬µ«×îµÍ1Ãë 
-void timesleeps(double seconds);        //Ê±¼äÔİÍ££¬²»¹»¾«È·£¬µ«¿ÉÔİÍ£Íò·ÖÖ®Ò»Ãë 
-int issu(int);                          //ÅĞ¶ÏËØÊı 
-int add(int a,int b);                   //ÀûÓÃÎ»ÔËËãÇóºÍ 
+void userand(void);                     //ï¿½ï¿½ï¿½ï¿½ 
+int randint(int a,int b);               //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+float randuniform(float a,float b);     //ï¿½ï¿½ï¿½Êµï¿½ï¿½ 
+void timesleep(int seconds);            //Ê±ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½Ï¾ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ 
+void timesleeps(double seconds);        //Ê±ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½Ö®Ò»ï¿½ï¿½ 
+int issu(int);                          //ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½ 
+int add(int a,int b);                   //ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 
-void gotoxy(short x,short y);        //ÒÆ¶¯¹â±ê
-VOID Hide(VOID);                     //Òş²Ø¹â±ê 
-inline void clear(void);             //ÇåÀíÆÁÄ»
-int * choose_sort(int *p,int n);     //µİ¹éÊµÏÖÑ¡ÔñÅÅĞò 
+void gotoxy(short x,short y);        //ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½
+VOID Hide(VOID);                     //ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ 
+inline void clear(void);             //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»
+int * choose_sort(int *p,int n);     //ï¿½İ¹ï¿½Êµï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 
 
-int add(int a,int b){          //ÏÈĞ´Á½¸öÒ»°ãÕûÊıÍ¨¹ıÎ»ÔËËãÏà¼Ó 
-	int c=a&b;                 //ÒòÎª1+1Òª½ø1£¬°ÑÒª½øµÄÎ»´æµ½cÖĞ 
-	c<<=1;                     //½øÎ» 
-	if(c==0)return a^b;        //cÊÇ0Ê±ºò²»ÓÃ½ø£¬c²»ÊÇ0Ê±ºòÒªÓÃµİ¹é¼Óµ½½á¹ûÉÏ 
-	return add(a^b,c);         //0+0=0£¬0+1=1£¬1+1=0£¨½øÎ»£©£¬·¢ÏÖÇ¡ºÃÓëÒì»òÂß¼­ÏàËÆ 
+int add(int a,int b){          //ï¿½ï¿½Ğ´ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	int c=a&b;                 //ï¿½ï¿½Îª1+1Òªï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Î»ï¿½æµ½cï¿½ï¿½ 
+	c<<=1;                     //ï¿½ï¿½Î» 
+	if(c==0)return a^b;        //cï¿½ï¿½0Ê±ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½cï¿½ï¿½ï¿½ï¿½0Ê±ï¿½ï¿½Òªï¿½Ãµİ¹ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	return add(a^b,c);         //0+0=0ï¿½ï¿½0+1=1ï¿½ï¿½1+1=0ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ 
 }
 
 void userand(void){srand((unsigned)time(NULL));}
