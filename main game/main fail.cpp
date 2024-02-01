@@ -15,7 +15,7 @@ struct bagpack
 	int level;
 	int heavy;
 	int object_num;
-	struct item bagpack_item[1000];
+	struct item bagpack_item[10];
 };
 struct skill
 {
@@ -62,7 +62,7 @@ struct treasure
 	int dimension;
 	char name[50];
 	int object_num;
-	struct item treasure_item[1000];
+	struct item treasure_item[5];
 	int x_location;
 	int y_location;
 };
@@ -99,7 +99,7 @@ void show_bagpack(struct bagpack *a)
 	}
 }
 
-void load_monster(int x, int y, int num, int dimension, struct monster (*a)[10])
+void load_monster(int x, int y, int dimension, int num,struct monster (*a)[10])
 {
 	int restnum=num;
 	for (int i = 0;i<10; i++)
@@ -126,9 +126,9 @@ void load_monster(int x, int y, int num, int dimension, struct monster (*a)[10])
 	}
 	}
 	
-	return;
+	return ;
 }
-void load_people(int x, int y, int num, int dimension, struct people (*a)[10])
+void load_people(int x, int y, int dimension,int num, struct people (*a)[10])
 {
 	int restnum=num;
 	for (int i = 0;i<10; i++)
@@ -157,9 +157,9 @@ void load_people(int x, int y, int num, int dimension, struct people (*a)[10])
 
 
 	}
-	return;
+	return ; 
 }
-void load_treasure(int x, int y, int num, int dimension,struct treasure (*a)[10])
+void load_treasure(int x, int y, int dimension,int num, struct treasure (*a)[10])
 {
 	int restnum=num;
 	for (int i = 0;i<10; i++)
@@ -178,9 +178,9 @@ void load_treasure(int x, int y, int num, int dimension,struct treasure (*a)[10]
 		break;
 	}
 	}
-	return;
+	return ;
 }
-void load_land(int x, int y, int dimension, struct land *a)
+void load_land(int x, int y, int dimension,  struct land *a)
 
 {
 	a->x_location = x;
@@ -244,7 +244,7 @@ int main(void)
 			load_land(i, j, 1, &earth[i][j]);
 			if(earth[i][j].land_void_judge == 1)
 			{
-				;
+				continue;
 			}
 			
 			else if(earth[i][j].land_monster_judge ==1)
