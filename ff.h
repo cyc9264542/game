@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include<string.h>
-void estr_to_num();//科学计数法转数字
-void fengshu_to_xunhuan(x,y);//分数转循环小数
-void fengshu_to_xunhuan(x,y)
+void estr_to_num(char *a,int len);//科学计数法转数字
+void fengshu_to_xunhuan(int x,int y);//分数转循环小数
+void fengshu_to_xunhuan(int x,int y)
 {
 int xun(int j,int k)
 {
