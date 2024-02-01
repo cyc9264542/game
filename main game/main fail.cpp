@@ -99,7 +99,7 @@ void show_bagpack(struct bagpack *a)
 	}
 }
 
-void load_monster(int x, int y, int dimension, int num,struct monster (*a)[10])
+void load_monster(int x, int y, int dimension, int num,struct monster *a[10])
 {
 	int restnum=num;
 	for (int i = 0;i<10; i++)
@@ -128,7 +128,7 @@ void load_monster(int x, int y, int dimension, int num,struct monster (*a)[10])
 	
 	return ;
 }
-void load_people(int x, int y, int dimension,int num, struct people (*a)[10])
+void load_people(int x, int y, int dimension,int num, struct people *a[10])
 {
 	int restnum=num;
 	for (int i = 0;i<10; i++)
@@ -159,7 +159,7 @@ void load_people(int x, int y, int dimension,int num, struct people (*a)[10])
 	}
 	return ; 
 }
-void load_treasure(int x, int y, int dimension,int num, struct treasure (*a)[10])
+void load_treasure(int x, int y, int dimension,int num, struct treasure *a[10])
 {
 	int restnum=num;
 	for (int i = 0;i<10; i++)
@@ -202,7 +202,7 @@ void load_land(int x, int y, int dimension,  struct land *a)
 		a->land_monster_judge = 1;
 		a->land_people_judge = 0;
 		a->land_treasure_judge = 0;
-		a->land_monster_num = (randint(1, 3));
+		a->land_monster_num = (randint(2, 3));
 		
 	}
 	else if (judge >= 8 && judge <= 9)
@@ -211,7 +211,7 @@ void load_land(int x, int y, int dimension,  struct land *a)
 		a->land_monster_judge = 0;
 		a->land_people_judge = 1;
 		a->land_treasure_judge = 0;
-		a->land_people_num = (randint(1, 2));
+		a->land_people_num = (randint(2, 3));
 		
 	}
 	else
@@ -220,7 +220,7 @@ void load_land(int x, int y, int dimension,  struct land *a)
 		a->land_monster_judge = 0;
 		a->land_people_judge = 0;
 		a->land_treasure_judge = 1;
-		a->land_treasure_num = (randint(1, 2));
+		a->land_treasure_num = (randint(2, 3));
 		
 	}
 
@@ -232,9 +232,9 @@ int main(void)
 	int y_setup;
 	scanf("%d %d", &x_setup, &y_setup);
 	struct land earth[x_setup][y_setup];
-	struct monster monster_earth[10];
-	struct people people_earth[10];
-	struct treasure treasure_earth[10];
+	struct monster *monster_earth[10];
+	struct people *people_earth[10];
+	struct treasure *treasure_earth[10];
 	struct bagpack bagpack_earth;
 
 	for (int i = 0; i < x_setup; i++)
@@ -249,15 +249,15 @@ int main(void)
 			
 			else if(earth[i][j].land_monster_judge ==1)
 			{
-				load_monster(i,j,1,earth[i][j].land_monster_num,&monster_earth);
+				load_monster(i,j,1,earth[i][j].land_monster_num,monster_earth);
 			}
 			else if(earth[i][j].land_people_judge == 1)
 			{
-				load_people(i,j,1,earth[i][j].land_people_num,&people_earth);
+				load_people(i,j,1,earth[i][j].land_people_num,people_earth);
 			}
 			else if(earth[i][j].land_treasure_judge == 1)
 			{
-				load_treasure(i,j,1,earth[i][j].land_treasure_num,&treasure_earth);
+				load_treasure(i,j,1,earth[i][j].land_treasure_num,treasure_earth);
 			}
 
 		}
@@ -275,13 +275,13 @@ int main(void)
 	
 	for(int j=0;j<10;j++)
 	{
-		if( monster_earth[j].judge!=-1)
+		if( monster_earth[j]->judge==1)
 		{
-			printf("monster%d %d %d %d %d   %d %d\n", monster_earth[j].attack,monster_earth[j].defense,monster_earth[j].luck,monster_earth[j].speed,monster_earth[j].wisdom,monster_earth[j].x_location,monster_earth[j].y_location);
+			printf("monster%d %d %d %d %d   %d %d\n", monster_earth[j]->attack,monster_earth[j]->defense,monster_earth[j]->luck,monster_earth[j]->speed,monster_earth[j]->wisdom,monster_earth[j]->x_location,monster_earth[j]->y_location);
 		}
-		if( people_earth[j].judge!=-1)
+		if( people_earth[j]->judge!=-1)
 		{
-			printf("people%d %d %d %d %d   %d %d\n", people_earth[j].attack,people_earth[j].defense,people_earth[j].luck,people_earth[j].speed,people_earth[j].wisdom,people_earth[j].x_location,people_earth[j].y_location);
+			printf("people%d %d %d %d %d   %d %d\n", people_earth[j]->attack,people_earth[j]->defense,people_earth[j]->luck,people_earth[j]->speed,people_earth[j]->wisdom,people_earth[j]->x_location,people_earth[j]->y_location);
 		}
 
 		
