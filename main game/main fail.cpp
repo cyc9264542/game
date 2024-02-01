@@ -232,9 +232,14 @@ int main(void)
 	int y_setup;
 	scanf("%d %d", &x_setup, &y_setup);
 	struct land earth[x_setup][y_setup];
-	struct monster *monster_earth[10];
+	struct monster *monster_earth[10]; 
 	struct people *people_earth[10];
 	struct treasure *treasure_earth[10];
+	for(int i=0;i<10;i++){
+		monster_earth[i]=new monster;
+		people_earth[i]=new people;
+		treasure_earth[i]=new treasure;
+	}
 	struct bagpack bagpack_earth;
 
 	for (int i = 0; i < x_setup; i++)
