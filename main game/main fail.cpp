@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "NB.h"
-struct item
+#define max_num_real 1000  //最大每种实体数量
+#define x_setup 10
+#define y_setup 10
+struct item      //定义物品
 {
 	char name[50];
 	int nbt;
@@ -9,7 +12,7 @@ struct item
 	int size;
 	int num;
 };
-struct bagpack
+struct bagpack	//定义背包
 {
 	int size;
 	int level;
@@ -17,7 +20,7 @@ struct bagpack
 	int object_num;
 	struct item bagpack_item[10];
 };
-struct skill
+struct skill	//定义技能
 {
 	char name[50];
 	int damage;
@@ -26,7 +29,7 @@ struct skill
 	int pp;
 	int anime;
 };
-struct people
+struct people	//定义人
 {
 	int judge;
 	int dimension;
@@ -41,7 +44,7 @@ struct people
 	int x_location;
 	int y_location;
 };
-struct monster
+struct monster	//定义怪物
 {
 	int judge;
 	int dimension;
@@ -56,7 +59,7 @@ struct monster
 	int x_location;
 	int y_location;
 };
-struct treasure
+struct treasure	//定义宝藏
 {
 	int judge;
 	int dimension;
@@ -66,7 +69,7 @@ struct treasure
 	int x_location;
 	int y_location;
 };
-struct land
+struct land		//定义每块地
 
 {
 	int dimension;
@@ -89,7 +92,7 @@ struct land
 	int land_action_judge;
 
 };
-void show_bagpack(struct bagpack *a)
+void show_bagpack(struct bagpack *a)	//显示背包函数
 {
 	printf("size:%d   level:%d   heavy:%d  object number:%d\n", a->size, a->level, a->heavy, a->object_num);
 	printf("items:\n");
@@ -98,11 +101,10 @@ void show_bagpack(struct bagpack *a)
 		printf("%s %d\n", (a->bagpack_item[i]).name, (a->bagpack_item[i]).num);
 	}
 }
-
-void load_monster(int x, int y, int dimension, int num,struct monster *a[10])
+void load_monster(int x, int y, int dimension, int num,struct monster *a[max_num_real])		//载入怪物函数
 {
 	int restnum=num;
-	for (int i = 0;i<10; i++)
+	for (int i = 0;i<max_num_real; i++)
 	{
 
 		if (a[i]->judge != 1)
@@ -128,10 +130,10 @@ void load_monster(int x, int y, int dimension, int num,struct monster *a[10])
 	
 	return ;
 }
-void load_people(int x, int y, int dimension,int num, struct people *a[10])
+void load_people(int x, int y, int dimension,int num, struct people *a[max_num_real])		//载入人函数
 {
 	int restnum=num;
-	for (int i = 0;i<10; i++)
+	for (int i = 0;i<max_num_real; i++)
 	{
 		if (a[i]->judge != 1)
 		{
@@ -159,10 +161,10 @@ void load_people(int x, int y, int dimension,int num, struct people *a[10])
 	}
 	return ; 
 }
-void load_treasure(int x, int y, int dimension,int num, struct treasure *a[10])
+void load_treasure(int x, int y, int dimension,int num, struct treasure *a[max_num_real])	//载入宝藏函数
 {
 	int restnum=num;
-	for (int i = 0;i<10; i++)
+	for (int i = 0;i<max_num_real; i++)
 	{
 		if (a[i]->judge != 1)
 		{
@@ -180,7 +182,7 @@ void load_treasure(int x, int y, int dimension,int num, struct treasure *a[10])
 	}
 	return ;
 }
-void load_land(int x, int y, int dimension,  struct land *a)
+void load_land(int x, int y, int dimension,  struct land *a)								//载入地图函数
 
 {
 	a->x_location = x;
@@ -189,7 +191,7 @@ void load_land(int x, int y, int dimension,  struct land *a)
 	a->level = 1;
 	int judge;
 	judge = (randint(1, 10));
-	if (judge >= 1 && judge <= 3)
+	if (judge >= 1 && judge <= 3)   //判断载入实体类型
 	{
 		a->land_void_judge = 1;
 		a->land_monster_judge = 0;
@@ -226,25 +228,11 @@ void load_land(int x, int y, int dimension,  struct land *a)
 
 	return;
 }
-int main(void)
+void load(int x,int y,struct land earth[][y_setup],struct monster *monster_earth[],struct people *people_earth[],struct treasure *treasure_earth[])
 {
-	int x_setup;
-	int y_setup;
-	scanf("%d %d", &x_setup, &y_setup);
-	struct land earth[x_setup][y_setup];
-	struct monster *monster_earth[10]; 
-	struct people *people_earth[10];
-	struct treasure *treasure_earth[10];
-	for(int i=0;i<10;i++){
-		monster_earth[i]=new monster;
-		people_earth[i]=new people;
-		treasure_earth[i]=new treasure;
-	}
-	struct bagpack bagpack_earth;
-
-	for (int i = 0; i < x_setup; i++)
+	for (int i = 0; i < x; i++)
 	{
-		for (int j = 0; j < y_setup; j++)
+		for (int j = 0; j < y; j++)
 		{
 			load_land(i, j, 1, &earth[i][j]);
 			if(earth[i][j].land_void_judge == 1)
@@ -268,6 +256,22 @@ int main(void)
 		}
 	}
 
+}
+int main(void)
+{	//读入加载大小
+	struct land earth[x_setup][y_setup];		//初始化实体库
+	struct monster *monster_earth[max_num_real]; 
+	struct people *people_earth[max_num_real];
+	struct treasure *treasure_earth[max_num_real];
+	for(int i=0;i<max_num_real;i++){			//指针指向
+		monster_earth[i]=new monster;
+		people_earth[i]=new people;
+		treasure_earth[i]=new treasure;
+	}
+	struct bagpack bagpack_earth;
+
+	load(x_setup,y_setup,earth,monster_earth,people_earth,treasure_earth);
+
 	for(int i=0;i<x_setup;i++)
 	{
 		for(int j=0;j<y_setup;j++)
@@ -278,13 +282,13 @@ int main(void)
 
 	}
 	
-	for(int j=0;j<10;j++)
+	for(int j=0;j<max_num_real;j++)
 	{
 		if( monster_earth[j]->judge==1)
 		{
 			printf("monster%d %d %d %d %d   %d %d\n", monster_earth[j]->attack,monster_earth[j]->defense,monster_earth[j]->luck,monster_earth[j]->speed,monster_earth[j]->wisdom,monster_earth[j]->x_location,monster_earth[j]->y_location);
 		}
-		if( people_earth[j]->judge!=-1)
+		if( people_earth[j]->judge==1)
 		{
 			printf("people%d %d %d %d %d   %d %d\n", people_earth[j]->attack,people_earth[j]->defense,people_earth[j]->luck,people_earth[j]->speed,people_earth[j]->wisdom,people_earth[j]->x_location,people_earth[j]->y_location);
 		}
