@@ -1,3 +1,6 @@
+#ifndef NB_H
+#define NB_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -105,3 +108,5 @@ int * choose_sort(int *p,int n){
 	if(max!=p[n-1])p[n-1]^=p[j]^=p[n-1]^=p[j];
 	return choose_sort(p,n-1);
 }
+
+#endif
