@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "NB.h"
-#define max_num_real 1000  //æœ€å¤§æ¯ç§å®ä½“æ•°é‡
+#define max_num_real 1000  //×î´óÃ¿ÖÖÊµÌåÊıÁ¿
 #define x_setup 10
 #define y_setup 10
-struct item      //å®šä¹‰ç‰©å“
+struct item      //¶¨ÒåÎïÆ·
 {
 	char name[50];
 	int nbt;
@@ -12,7 +12,7 @@ struct item      //å®šä¹‰ç‰©å“
 	int size;
 	int num;
 };
-struct bagpack	//å®šä¹‰èƒŒåŒ…
+struct bagpack	//¶¨Òå±³°ü
 {
 	int size;
 	int level;
@@ -20,7 +20,7 @@ struct bagpack	//å®šä¹‰èƒŒåŒ…
 	int object_num;
 	struct item bagpack_item[10];
 };
-struct skill	//å®šä¹‰æŠ€èƒ½
+struct skill	//¶¨Òå¼¼ÄÜ
 {
 	char name[50];
 	int damage;
@@ -29,7 +29,7 @@ struct skill	//å®šä¹‰æŠ€èƒ½
 	int pp;
 	int anime;
 };
-struct people	//å®šä¹‰äºº
+struct people	//¶¨ÒåÈË
 {
 	int judge;
 	int dimension;
@@ -44,7 +44,7 @@ struct people	//å®šä¹‰äºº
 	int x_location;
 	int y_location;
 };
-struct monster	//å®šä¹‰æ€ªç‰©
+struct monster	//¶¨Òå¹ÖÎï
 {
 	int judge;
 	int dimension;
@@ -59,7 +59,7 @@ struct monster	//å®šä¹‰æ€ªç‰©
 	int x_location;
 	int y_location;
 };
-struct treasure	//å®šä¹‰å®è—
+struct treasure	//¶¨Òå±¦²Ø
 {
 	int judge;
 	int dimension;
@@ -69,7 +69,7 @@ struct treasure	//å®šä¹‰å®è—
 	int x_location;
 	int y_location;
 };
-struct land		//å®šä¹‰æ¯å—åœ°
+struct land		//¶¨ÒåÃ¿¿éµØ
 
 {
 	int dimension;
@@ -92,7 +92,7 @@ struct land		//å®šä¹‰æ¯å—åœ°
 	int land_action_judge;
 
 };
-void show_bagpack(struct bagpack *a)	//æ˜¾ç¤ºèƒŒåŒ…å‡½æ•°
+void show_bagpack(struct bagpack *a)	//ÏÔÊ¾±³°üº¯Êı
 {
 	printf("size:%d   level:%d   heavy:%d  object number:%d\n", a->size, a->level, a->heavy, a->object_num);
 	printf("items:\n");
@@ -101,7 +101,7 @@ void show_bagpack(struct bagpack *a)	//æ˜¾ç¤ºèƒŒåŒ…å‡½æ•°
 		printf("%s %d\n", (a->bagpack_item[i]).name, (a->bagpack_item[i]).num);
 	}
 }
-void load_monster(int x, int y, int dimension, int num,struct monster *a[max_num_real])		//è½½å…¥æ€ªç‰©å‡½æ•°
+void load_monster(int x, int y, int dimension, int num,struct monster *a[max_num_real])		//ÔØÈë¹ÖÎïº¯Êı
 {
 	int restnum=num;
 	for (int i = 0;i<max_num_real; i++)
@@ -130,7 +130,7 @@ void load_monster(int x, int y, int dimension, int num,struct monster *a[max_num
 	
 	return ;
 }
-void load_people(int x, int y, int dimension,int num, struct people *a[max_num_real])		//è½½å…¥äººå‡½æ•°
+void load_people(int x, int y, int dimension,int num, struct people *a[max_num_real])		//ÔØÈëÈËº¯Êı
 {
 	int restnum=num;
 	for (int i = 0;i<max_num_real; i++)
@@ -161,7 +161,7 @@ void load_people(int x, int y, int dimension,int num, struct people *a[max_num_r
 	}
 	return ; 
 }
-void load_treasure(int x, int y, int dimension,int num, struct treasure *a[max_num_real])	//è½½å…¥å®è—å‡½æ•°
+void load_treasure(int x, int y, int dimension,int num, struct treasure *a[max_num_real])	//ÔØÈë±¦²Øº¯Êı
 {
 	int restnum=num;
 	for (int i = 0;i<max_num_real; i++)
@@ -182,7 +182,7 @@ void load_treasure(int x, int y, int dimension,int num, struct treasure *a[max_n
 	}
 	return ;
 }
-void load_land(int x, int y, int dimension,  struct land *a)								//è½½å…¥åœ°å›¾å‡½æ•°
+void load_land(int x, int y, int dimension,  struct land *a)								//ÔØÈëµØÍ¼º¯Êı
 
 {
 	a->x_location = x;
@@ -191,7 +191,7 @@ void load_land(int x, int y, int dimension,  struct land *a)								//è½½å…¥åœ°å
 	a->level = 1;
 	int judge;
 	judge = (randint(1, 10));
-	if (judge >= 1 && judge <= 3)   //åˆ¤æ–­è½½å…¥å®ä½“ç±»å‹
+	if (judge >= 1 && judge <= 3)   //ÅĞ¶ÏÔØÈëÊµÌåÀàĞÍ
 	{
 		a->land_void_judge = 1;
 		a->land_monster_judge = 0;
@@ -258,12 +258,12 @@ void load(int x,int y,struct land earth[][y_setup],struct monster *monster_earth
 
 }
 int main(void)
-{	//è¯»å…¥åŠ è½½å¤§å°
-	struct land earth[x_setup][y_setup];		//åˆå§‹åŒ–å®ä½“åº“
+{	//¶ÁÈë¼ÓÔØ´óĞ¡
+	struct land earth[x_setup][y_setup];		//³õÊ¼»¯ÊµÌå¿â
 	struct monster *monster_earth[max_num_real]; 
 	struct people *people_earth[max_num_real];
 	struct treasure *treasure_earth[max_num_real];
-	for(int i=0;i<max_num_real;i++){			//æŒ‡é’ˆæŒ‡å‘
+	for(int i=0;i<max_num_real;i++){			//Ö¸ÕëÖ¸Ïò
 		monster_earth[i]=new monster;
 		people_earth[i]=new people;
 		treasure_earth[i]=new treasure;
@@ -276,7 +276,7 @@ int main(void)
 	{
 		for(int j=0;j<y_setup;j++)
 	{
-		printf("%d %d %d %d\n",earth[i][j].land_void_judge,earth[i][j].land_monster_judge,earth[i][j].land_people_judge,earth[i][j].land_treasure_judge);
+		printf("%d %d %d ÄãºÃ%d\n",earth[i][j].land_void_judge,earth[i][j].land_monster_judge,earth[i][j].land_people_judge,earth[i][j].land_treasure_judge);
 		
 	}
 
@@ -295,7 +295,7 @@ int main(void)
 
 		
 	}
-	// æµ‹è¯•è¾“å‡º
+	// ²âÊÔÊä³ö
 
 	return 0;
 }
