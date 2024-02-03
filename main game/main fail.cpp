@@ -259,6 +259,7 @@ void load(int x,int y,struct land earth[][y_setup],struct monster *monster_earth
 }
 int main(void)
 {	//读入加载大小
+	userand();
 	struct land earth[x_setup][y_setup];		//初始化实体库
 	struct monster *monster_earth[max_num_real]; 
 	struct people *people_earth[max_num_real];
@@ -267,6 +268,7 @@ int main(void)
 		monster_earth[i]=new monster;
 		people_earth[i]=new people;
 		treasure_earth[i]=new treasure;
+
 	}
 	struct bagpack bagpack_earth;
 
@@ -276,7 +278,7 @@ int main(void)
 	{
 		for(int j=0;j<y_setup;j++)
 	{
-		printf("%d %d %d 你好%d\n",earth[i][j].land_void_judge,earth[i][j].land_monster_judge,earth[i][j].land_people_judge,earth[i][j].land_treasure_judge);
+		printf("%d %d %d %d\n",earth[i][j].land_void_judge,earth[i][j].land_monster_judge,earth[i][j].land_people_judge,earth[i][j].land_treasure_judge);
 		
 	}
 
