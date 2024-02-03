@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <string.h>
 #include "NB.h"
 #define max_num_real 1000  //最大每种实体数量
 #define x_setup 10
@@ -7,9 +5,9 @@
 struct item      //定义物品
 {
 	char name[50];
-	int nbt;
+	int nbt;                 //物品编号 
 	int heavy;
-	int size;
+	int size;                //物品占格 
 	int num;
 };
 struct bagpack	//定义背包
@@ -32,7 +30,7 @@ struct skill	//定义技能
 struct people	//定义人
 {
 	int judge;
-	int dimension;
+	int dimension;              //维度 
 	char name[50];
 	int level;
 	int attack;
@@ -257,8 +255,54 @@ void load(int x,int y,struct land earth[][y_setup],struct monster *monster_earth
 	}
 
 }
-int main(void)
-{	//读入加载大小
+
+/////////////////////////////////////////////////
+//将以上部分放入地图、物品、人物等不同头文件中 
+/////////////////////////////////////////////////
+
+//将主体代码写在game函数中，并调试，没问题的函数放到对应的头文件中，函数调用写在game中 
+
+int start_UI(void);                            //开始界面 
+void loading_pv(int t);                        //加载动画
+int game(void);                                //游戏主体
+
+int main(void){	
+	userand(); 
+	
+	//start_UI();
+	
+	game();
+
+	return 0;
+}
+
+int start_UI(void){
+	printf("按任意键开始游戏");
+	getch(); 
+	clear(); 
+	
+	return 0;
+}
+
+void loading_pv(int t){
+	clear();
+	printf("加载中");
+		for(int i=1;i<=t;i++){
+			timesleeps(0.15);
+			putchar('.');
+			timesleeps(0.2);
+			putchar('.');
+			timesleeps(0.2);
+			putchar('.');
+			timesleeps(0.15);
+			printf("\b\b\b   \b\b\b");
+		}
+		printf("\r      \r");
+	
+}
+
+int game(void){
+	//读入加载大小
 	struct land earth[x_setup][y_setup];		//初始化实体库
 	struct monster *monster_earth[max_num_real]; 
 	struct people *people_earth[max_num_real];
@@ -295,7 +339,18 @@ int main(void)
 
 		
 	}
-	// 测试输出
-
+	// 测试输出	
+	
+	
+	
+	
+	
 	return 0;
 }
+
+
+
+
+
+
+
