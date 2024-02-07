@@ -14,8 +14,8 @@
 
 #define up 72
 #define down 80
-#define left 75
-#define right 77
+//#define left 75
+//#define right 77
 #define Esc 27
 
 //SetConsoleOutputCP(65001);936:¼òÌåÖĞÎÄ,65001:UTF-8, 

@@ -6,40 +6,109 @@
 using namespace std;
 
 
-//å®šä¹‰ç‰©å“
+//¶¨ÒåÎïÆ·
 class item      
 {
-    static int item::currentID;
+    static int currentID;
 public:
-    //åˆ›é€ æ–°çš„ç‰©å“
+    //´´ÔìĞÂµÄÎïÆ·
     item(string Name,int Weight,int Size,int Num):name(Name),weight(Weight),size(Size),num(Num){
         ID=++currentID;
     };
 
-    //è·å–ç‰©å“åç§°ä¸æ•°é‡
+    //»ñÈ¡ÎïÆ·Ãû³ÆÓëÊıÁ¿
     void get_info(){
         
         cout<<name<<' '<<num;
     };
 
-    //è·å–ç‰©å“é‡é‡
+    //»ñÈ¡ÎïÆ·ÖØÁ¿
     int get_weight(){
         return weight;
     };
 
-    //ç‰©å“æ•ˆç”¨
+    //ÎïÆ·Ğ§ÓÃ
     virtual void utilize()=0;
 
     
 
 protected:
 	string name;
-	int ID;                 //ç‰©å“ç¼–å· 
-	int weight;              //ç‰©å“é‡é‡
-	int size;                //ç‰©å“å æ ¼ 
-	int num;                //å †å æ•°é‡
+	int ID;                 //ÎïÆ·±àºÅ 
+	int weight;              //ÎïÆ·ÖØÁ¿
+	int size;                //ÎïÆ·Õ¼¸ñ 
+	int num;                //¶ÑµşÊıÁ¿
 
 };
 
 int item::currentID=0;
 #endif 
+
+
+
+
+/*
+//èº¹ØÓÚÎïÆ·µÄ¶¨Òå£º
+
+
+struct item      //¶¨ÒåÎïÆ·
+{
+	char name[50];
+	int nbt;                 //ÎïÆ·±àºÅ 
+	int heavy;
+	int size;                //ÎïÆ·Õ¼¸ñ 
+	int num;
+};
+
+struct bagpack	//¶¨Òå±³°ü
+{
+	int size;
+	int level;
+	int heavy;
+	int object_num;
+	struct item bagpack_item[10];
+};
+void show_bagpack(struct bagpack *a)	//ÏÔÊ¾±³°üº¯Êı
+{
+	printf("size:%d   level:%d   heavy:%d  object number:%d\n", a->size, a->level, a->heavy, a->object_num);
+	printf("items:\n");
+	for (int i = 0; i < (a->object_num); i++)
+	{
+		printf("%s %d\n", (a->bagpack_item[i]).name, (a->bagpack_item[i]).num);
+	}
+}
+
+
+struct treasure	//¶¨Òå±¦²Ø
+{
+	int judge;
+	int dimension;
+	char name[50];
+	int object_num;
+	struct item treasure_item[5];
+	int x_location;
+	int y_location;
+};
+void load_treasure(int x, int y, int dimension,int num, struct treasure *a[max_num_real])	//ÔØÈë±¦²Øº¯Êı
+{
+	int restnum=num;
+	for (int i = 0;i<max_num_real; i++)
+	{
+		if (a[i]->judge != 1)
+		{
+			restnum--;
+			a[i]->judge = 1;
+			strcpy(a[i]->name, "treasure");
+			a[i]->dimension=dimension;
+			a[i]->x_location = x;
+			a[i]->y_location = y;
+		}
+	if(restnum==0)
+	{
+		break;
+	}
+	}
+	return ;
+}
+
+*/

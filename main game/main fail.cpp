@@ -1,285 +1,34 @@
-#include "NB.h"
-#define max_num_real 1000  //最大每种实体数量
-#define x_setup 10
-#define y_setup 10
-struct item      //定义物品
-{
-	char name[50];
-	int nbt;                 //物品编号 
-	int heavy;
-	int size;                //物品占格 
-	int num;
-};
-struct bagpack	//定义背包
-{
-	int size;
-	int level;
-	int heavy;
-	int object_num;
-	struct item bagpack_item[10];
-};
-struct skill	//定义技能
-{
-	char name[50];
-	int damage;
-	int level;
-	int possibility;
-	int pp;
-	int anime;
-};
-struct people	//定义人
-{
-	int judge;
-	int dimension;              //维度 
-	char name[50];
-	int level;
-	int attack;
-	int defense;
-	int speed;
-	int wisdom;
-	int luck;
-	struct skill *people_skill[5];
-	int x_location;
-	int y_location;
-};
-struct monster	//定义怪物
-{
-	int judge;
-	int dimension;
-	char name[50];
-	int level;
-	int attack;
-	int defense;
-	int speed;
-	int wisdom;
-	int luck;
-	struct skill *monster_skill[5];
-	int x_location;
-	int y_location;
-};
-struct treasure	//定义宝藏
-{
-	int judge;
-	int dimension;
-	char name[50];
-	int object_num;
-	struct item treasure_item[5];
-	int x_location;
-	int y_location;
-};
-struct land		//定义每块地
+#include "all.h"
+//若某个头文件报错，请参考people.h开头注释 
 
-{
-	int dimension;
-	int level;
-	int x_location;
-	int y_location;
+//将主体代码写在game函数中，并调试，没问题的函数放到对应的头文件中，函数调用写在game中
 
-	int land_people_judge;
-	int land_monster_judge;
-	int land_treasure_judge;
-
-	int land_people_num;
-	int land_monster_num;
-	int land_treasure_num;
-
-	int land_wall_judge;
-	int land_void_judge;
-
-	int land_action_num;
-	int land_action_judge;
-
-};
-void show_bagpack(struct bagpack *a)	//显示背包函数
-{
-	printf("size:%d   level:%d   heavy:%d  object number:%d\n", a->size, a->level, a->heavy, a->object_num);
-	printf("items:\n");
-	for (int i = 0; i < (a->object_num); i++)
-	{
-		printf("%s %d\n", (a->bagpack_item[i]).name, (a->bagpack_item[i]).num);
-	}
-}
-void load_monster(int x, int y, int dimension, int num,struct monster *a[max_num_real])		//载入怪物函数
-{
-	int restnum=num;
-	for (int i = 0;i<max_num_real; i++)
-	{
-
-		if (a[i]->judge != 1)
-		{
-			restnum--;
-			a[i]->judge = 1;
-			strcpy(a[i]->name, "wolf");
-			a[i]->dimension=dimension;
-			a[i]->level = 1;
-			a[i]->attack = randint(1, 5);
-			a[i]->defense = randint(2, 8);
-			a[i]->speed = randint(2, 7);
-			a[i]->wisdom = randint(1, 6);
-			a[i]->luck = randint(1, 4);
-			a[i]->x_location = x;
-			a[i]->y_location = y;
-		}
-	if(restnum==0)
-	{
-		break;
-	}
-	}
-	
-	return ;
-}
-void load_people(int x, int y, int dimension,int num, struct people *a[max_num_real])		//载入人函数
-{
-	int restnum=num;
-	for (int i = 0;i<max_num_real; i++)
-	{
-		if (a[i]->judge != 1)
-		{
-			restnum--;
-			a[i]->judge = 1;
-			strcpy(a[i]->name, "people");
-			a[i]->dimension=dimension;
-			a[i]->level = 1;
-			a[i]->attack = randint(2, 5);
-			a[i]->defense = randint(2, 6);
-			a[i]->speed = randint(1, 3);
-			a[i]->wisdom = randint(1, 5);
-			a[i]->luck = randint(1, 5);
-			a[i]->x_location = x;
-			a[i]->y_location = y;
-		}
-
-		
-	if(restnum==0)
-	{
-		break;
-	}
-
-
-	}
-	return ; 
-}
-void load_treasure(int x, int y, int dimension,int num, struct treasure *a[max_num_real])	//载入宝藏函数
-{
-	int restnum=num;
-	for (int i = 0;i<max_num_real; i++)
-	{
-		if (a[i]->judge != 1)
-		{
-			restnum--;
-			a[i]->judge = 1;
-			strcpy(a[i]->name, "treasure");
-			a[i]->dimension=dimension;
-			a[i]->x_location = x;
-			a[i]->y_location = y;
-		}
-	if(restnum==0)
-	{
-		break;
-	}
-	}
-	return ;
-}
-void load_land(int x, int y, int dimension,  struct land *a)								//载入地图函数
-
-{
-	a->x_location = x;
-	a->y_location = y;
-	a->dimension = dimension;
-	a->level = 1;
-	int judge;
-	judge = (randint(1, 10));
-	if (judge >= 1 && judge <= 3)   //判断载入实体类型
-	{
-		a->land_void_judge = 1;
-		a->land_monster_judge = 0;
-		a->land_people_judge = 0;
-		a->land_treasure_judge = 0;
-	}
-	else if (judge >= 4 && judge <= 7)
-	{
-		a->land_void_judge = 0;
-		a->land_monster_judge = 1;
-		a->land_people_judge = 0;
-		a->land_treasure_judge = 0;
-		a->land_monster_num = (randint(2, 3));
-		
-	}
-	else if (judge >= 8 && judge <= 9)
-	{
-		a->land_void_judge = 0;
-		a->land_monster_judge = 0;
-		a->land_people_judge = 1;
-		a->land_treasure_judge = 0;
-		a->land_people_num = (randint(2, 3));
-		
-	}
-	else
-	{
-		a->land_void_judge = 0;
-		a->land_monster_judge = 0;
-		a->land_people_judge = 0;
-		a->land_treasure_judge = 1;
-		a->land_treasure_num = (randint(2, 3));
-		
-	}
-
-	return;
-}
-void load(int x,int y,struct land earth[][y_setup],struct monster *monster_earth[],struct people *people_earth[],struct treasure *treasure_earth[])
-{
-	for (int i = 0; i < x; i++)
-	{
-		for (int j = 0; j < y; j++)
-		{
-			load_land(i, j, 1, &earth[i][j]);
-			if(earth[i][j].land_void_judge == 1)
-			{
-				continue;
-			}
-			
-			else if(earth[i][j].land_monster_judge ==1)
-			{
-				load_monster(i,j,1,earth[i][j].land_monster_num,monster_earth);
-			}
-			else if(earth[i][j].land_people_judge == 1)
-			{
-				load_people(i,j,1,earth[i][j].land_people_num,people_earth);
-			}
-			else if(earth[i][j].land_treasure_judge == 1)
-			{
-				load_treasure(i,j,1,earth[i][j].land_treasure_num,treasure_earth);
-			}
-
-		}
-	}
-
-}
-
-/////////////////////////////////////////////////
-//将以上部分放入地图、物品、人物等不同头文件中 
-/////////////////////////////////////////////////
-
-//将主体代码写在game函数中，并调试，没问题的函数放到对应的头文件中，函数调用写在game中 
+//请勿轻易修改main fail文件中的代码，否则可能引起冲突，如需修改请告诉其他人，避免两人同时修改导致冲突 
 
 int start_UI(void);                            //开始界面 
 void loading_pv(int t);                        //加载动画
 int game(void);                                //游戏主体
 
+
+
 int main(void){	
 	userand(); 
+	Hide(); 
 	
-	//start_UI();
+	start_UI();
 	
 	game();
 
 	return 0;
 }
 
+
+
 int start_UI(void){
 	printf("按任意键开始游戏");
 	getch(); 
-	clear(); 
+	clear();
+	loading_pv(1);
 	
 	return 0;
 }
@@ -288,13 +37,13 @@ void loading_pv(int t){
 	clear();
 	printf("加载中");
 		for(int i=1;i<=t;i++){
-			timesleeps(0.15);
-			putchar('.');
 			timesleeps(0.2);
 			putchar('.');
-			timesleeps(0.2);
+			timesleeps(0.25);
 			putchar('.');
-			timesleeps(0.15);
+			timesleeps(0.25);
+			putchar('.');
+			timesleeps(0.2);
 			printf("\b\b\b   \b\b\b");
 		}
 		printf("\r      \r");
@@ -302,6 +51,13 @@ void loading_pv(int t){
 }
 
 int game(void){
+	
+	
+	
+                //韬哥的测试代码部分:
+
+	/*
+	
 	//读入加载大小
 	struct land earth[x_setup][y_setup];		//初始化实体库
 	struct monster *monster_earth[max_num_real]; 
@@ -310,9 +66,9 @@ int game(void){
 	for(int i=0;i<max_num_real;i++){			//指针指向
 		monster_earth[i]=new monster;
 		people_earth[i]=new people;
-		treasure_earth[i]=new treasure;
+		//treasure_earth[i]=new treasure;
 	}
-	struct bagpack bagpack_earth;
+	//struct bagpack bagpack_earth;
 
 	load(x_setup,y_setup,earth,monster_earth,people_earth,treasure_earth);
 
@@ -341,14 +97,12 @@ int game(void){
 	}
 	// 测试输出	
 	
-	
+	*/
 	
 	
 	
 	return 0;
 }
-
-
 
 
 
